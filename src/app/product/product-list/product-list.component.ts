@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Product } from 'src/app/models/product';
-import {LayoutModule} from '@angular/cdk/layout';
+import {BreakpointObserver, Breakpoints, LayoutModule} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-product-list',
@@ -12,13 +12,53 @@ export class ProductListComponent implements OnInit {
 
 
   products : Product[] = []
+  cols:any;
+  rowheight:any;
+  handsetPortait = false;
   
-  constructor(private productService: ProductService){}
+  constructor(private productService: ProductService, private responsive: BreakpointObserver){}
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(
-      data => this.products = data
-    )}
+      data => this.products = data)
+    
+    this.responsive.observe([
+      Breakpoints.HandsetPortrait,
+      Breakpoints.HandsetLandscape,
+      Breakpoints.TabletPortrait,
+      Breakpoints.TabletLandscape]).subscribe(
+        result => {
+          const breakpointsPer = result.breakpoints;
+          this.cols = 5;
+          this.rowheight = "250";
+          this.handsetPortait = false;
+
+          if(breakpointsPer[Breakpoints.TabletPortrait]){
+            this.cols = 3;
+            this.rowheight = "300";
+            console.log(result.breakpoints);
+            
+          }
+          else if (breakpointsPer[Breakpoints.TabletLandscape]){
+            this.cols = 4;
+            this.rowheight = "200"
+            console.log(result.breakpoints);
+          }
+          else if (breakpointsPer[Breakpoints.HandsetPortrait]){
+            this.cols = 1;
+            this.rowheight = "300"
+            // this.handsetPortait = true;
+            console.log(result.breakpoints);
+          }
+          else if (breakpointsPer[Breakpoints.HandsetLandscape]){
+            this.cols = 3;
+            console.log(result.breakpoints);
+          }
+        }
+      )
+      
+  
+  }
 
 
   }

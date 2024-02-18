@@ -1,5 +1,19 @@
 .product-card{
-    max-width: 150px;
+    max-width: 150px;    
     
+}
+
+.product-grid-tile{
     
+}
+
+mat-card:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+mat-card{
+    transition: transform .2s;
+    
+
 }
