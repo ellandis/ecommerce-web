@@ -1,6 +1,6 @@
 
-<mat-grid-list cols="6" rowHeight="200px" *ngFor="let product of products">
-    <!-- <div *ngFor="let product of products"> -->
+<mat-grid-list cols="6" rowHeight="400px" >
+    <mat-grid-tile *ngFor="let product of products">
         <mat-card class="product-card" >
             <img mat-card-image src="assets/images/{{product.image_url}}" alt="">
             <mat-card-content>
@@ -8,5 +8,5 @@
                 <mat-card-subtitle>{{product.price | currency:"USD"}}</mat-card-subtitle>
             </mat-card-content>
         </mat-card>
-    <!-- </div> -->
+    </mat-grid-tile>
 </mat-grid-list>

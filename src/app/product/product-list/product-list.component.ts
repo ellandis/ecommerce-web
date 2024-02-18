@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Product } from 'src/app/models/product';
-
+import {LayoutModule} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-product-list',
