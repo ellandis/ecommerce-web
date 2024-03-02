@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Product } from 'src/app/models/product';
 import {BreakpointObserver, Breakpoints, LayoutModule} from '@angular/cdk/layout';
+import { CartService } from 'src/app/cart/cart.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-list',
@@ -16,7 +18,11 @@ export class ProductListComponent implements OnInit {
   rowheight:any;
   handsetPortait = false;
   
-  constructor(private productService: ProductService, private responsive: BreakpointObserver){}
+  constructor(
+    private productService: ProductService, 
+    private responsive: BreakpointObserver, 
+    private snackbar: MatSnackBar,
+    private cartService : CartService){}
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe(
@@ -55,10 +61,18 @@ export class ProductListComponent implements OnInit {
             console.log(result.breakpoints);
           }
         }
-      )
-      
-  
-  }
+      )}
 
+      addToCart(product: Product): void{
+        this.cartService.addToCart(product).subscribe({
+          next: () => {
+            this.snackbar.open("Product added to cart","",{
+              duration: 3000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top'
+            })
+          }
+        });
+      }
 
   }
